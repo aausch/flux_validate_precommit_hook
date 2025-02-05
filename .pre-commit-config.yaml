@@ -32,7 +32,7 @@ repos:
         language: system
         files: \.(sh|bash)$
         types: [file]
-        args: [ '-i', '0', '-ci', '-sr', '-d' ]
+        args: [ '-i', '0', '-ci', '-sr', '-d', '-w' ]
       # shfmt -w (must manually invoke)
       #
       - id: shfmtw

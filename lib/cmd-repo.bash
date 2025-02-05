@@ -19,3 +19,6 @@ if [ "${error_on_output:-}" -eq 1 ]; then
 else
 	/usr/bin/env "${ENV_VARS[@]}" "${cmd[@]}" "${OPTIONS[@]}"
 fi
+
+# # shellcheck source=./cleanup.bash
+. "$(dirname "${0}")/lib/cleanup.bash"
