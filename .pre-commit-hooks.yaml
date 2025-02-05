@@ -9,6 +9,14 @@
     entry: run-flux-validate-repo.sh
     files: '(\.yaml$)'
     language: 'script'
-    description: "Run 'deps/validate.sh' in repo root folder"
+    description: "Run 'validate.sh' in repo root folder"
     pass_filenames: false
+    require_serial: true
+-   id: run-flux-validate
+    name: 'run-flux-validate'
+    entry: run-flux-validate.sh
+    files: '(\.yaml$)'
+    language: 'script'
+    description: "Run 'validate.sh' in each changed folder"
+    pass_filenames: true
     require_serial: true

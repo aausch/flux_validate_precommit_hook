@@ -9,6 +9,14 @@
 #
 function prepare_file_hook_cmd {
 	verify_hook_cmd
+	parse_directory_hook_args "$@"
+}
+
+##
+# prepare_directory_hook_cmd
+#
+function prepare_directory_hook_cmd {
+	verify_hook_cmd
 	parse_file_hook_args "$@"
 }
 
@@ -36,17 +44,17 @@ function verify_hook_cmd {
 }
 
 ##
-# parse_file_hook_args
+# parse_directory_hook_args
 # Creates global vars:
 #   ENV_VARS: List of variables to assign+export before invoking command
 #   OPTIONS : List of options to pass to command
-#   FILES   : List of files to process, filtered against ignore_file_pattern_array
+#   FILES   : List of files to process
 #
 # NOTE: We consume the first (optional) '--' we encounter.
 #       If you want to pass '--' to the command, you'll need to use 2 of them
 #       in hook args, i.e. "args: [..., '--', '--']"
 #
-function parse_file_hook_args {
+function parse_directory_hook_args {
 	# Look for '--hook:*' options up to the first (optional) '--'
 	# Anything else (including '--' and after) gets saved and passed to next step
 	# Positional order of saved arguments is preserved
@@ -110,19 +118,17 @@ function parse_file_hook_args {
 	#
 	all_files+=("$@")
 
-	# Filter out vendor entries and ignore_file_pattern_array
-	#
-	FILES=()
-	local file pattern
-	ignore_file_pattern_array+=( "vendor/*" "*/vendor/*" "*/vendor" )
-	for file in "${all_files[@]}"; do
-		for pattern in "${ignore_file_pattern_array[@]}"; do
-			if [[ "${file}" == ${pattern} ]] ; then # pattern => unquoted
-				continue 2
-			fi
-		done
-		FILES+=("${file}")
-	done
+    DIRECTORIES=()
+    local file
+    local dir
+    for file in "${all_files[@]}"; do
+        if [ -f "${file}" ]; then
+            dir="$(dirname "${file}")"
+            if [[ ! " ${DIRECTORIES[*]} " =~ " ${dir} " ]]; then
+                DIRECTORIES+=("${dir}")
+            fi
+        fi
+    done
 }
 
 ##
