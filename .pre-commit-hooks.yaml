@@ -12,6 +12,12 @@
     description: "Run 'validate.sh' in repo root folder"
     pass_filenames: false
     require_serial: true
+# ==============================================================================
+# run-flux-validate
+#   * Directory-Based
+#   * Recursive
+#   * Executes if .yaml files are modified
+# ==============================================================================
 -   id: run-flux-validate
     name: 'run-flux-validate'
     entry: run-flux-validate.sh

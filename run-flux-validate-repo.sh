@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+error_on_output=1
 FILE=/tmp/flux-validate-precommit-hook/validate.sh
 if [[ ! -f "${FILE}" ]]; then
 	mkdir -p /tmp/flux-validate-precommit-hook
