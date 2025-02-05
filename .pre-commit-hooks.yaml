@@ -1,0 +1,14 @@
+# ==============================================================================
+# run-flux-validate-repo
+#   * Repo-Based
+#   * Recursive
+#   * Executes if .yaml files are modified
+# ==============================================================================
+-   id: run-flux-validate-repo
+    name: 'run-flux-validate-repo'
+    entry: run-flux-validate-repo.sh
+    files: '(\.yaml$)'
+    language: 'script'
+    description: "Run 'deps/validate.sh' in repo root folder"
+    pass_filenames: false
+    require_serial: true
